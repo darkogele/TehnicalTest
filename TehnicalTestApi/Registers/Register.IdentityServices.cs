@@ -15,6 +15,8 @@ public static partial class Register
         services.AddIdentity<User, Role>(options =>
         {
             options.Password.RequireNonAlphanumeric = false;
+            options.Password.RequireDigit = false;
+            options.Password.RequireUppercase = false;
             options.SignIn.RequireConfirmedAccount = false;
         })
             .AddSignInManager<SignInManager<User>>()
@@ -55,14 +57,8 @@ public static partial class Register
 
         services.AddAuthorization(options =>
         {
-            //options.AddPolicy(PolicyRoleName.PolicyAdmin, policy =>
-            //	policy.RequireRole(RoleNames.SuperAdmin, RoleNames.Admin));
-
-            //options.AddPolicy(PolicyRoleName.PolicyAzureFunctionUser, policy =>
-            //	policy.RequireRole(RoleNames.SuperAdmin, RoleNames.AzureFunctionUser));
-
-            //options.AddPolicy(PolicyRoleName.PolicySuperAdmin, policy =>
-            //	policy.RequireRole(RoleNames.SuperAdmin));
+            options.AddPolicy(PolicyRoleName.PolicyAdmin, policy =>
+                policy.RequireRole(RoleNames.Admin));
         });
 
         services.AddScoped<TokenService>();
