@@ -44,8 +44,8 @@ public static class Seed
         }
 
         var faker = new Faker<User>()
+            .RuleFor(p => p.UserName, f => f.Person.UserName)
             .RuleFor(p => p.DateOfBirth, f => f.Person.DateOfBirth)
-
             .RuleFor(p => p.Email, f => f.Person.Email)
             .RuleFor(p => p.FirstName, f => f.Person.FirstName)
             .RuleFor(p => p.LastName, f => f.Person.LastName)

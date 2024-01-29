@@ -23,9 +23,7 @@ public static partial class Register
 
         // Database configuration
         services.AddDbContext<ApplicationDataContext>(options =>
-        {
-            options.UseSqlite(config.GetConnectionString("DefaultConnection"));
-        });
+            options.UseSqlite(config.GetConnectionString("DefaultConnection")));
 
         // Dependency injection of custom Services
 

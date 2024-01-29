@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
 
-//Entities
 namespace TechnicalTestApi.Entities;
 
 public class User : IdentityUser<int>
@@ -13,4 +12,8 @@ public class User : IdentityUser<int>
     public string Bio { get; set; }
     public double Rating { get; set; }
     public DateTime DateOfBirth { get; set; }
+
+
+    //Fk
+    public List<UserRole>? UserRoles { get; init; }
 }

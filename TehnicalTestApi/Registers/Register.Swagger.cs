@@ -41,7 +41,7 @@ public static partial class Register
     {
         app.UseSwagger();
 
-        app.UseSwaggerUI(options => options.DocumentTitle = "Easy Education Api");
+        app.UseSwaggerUI(options => options.DocumentTitle = "Cosmic Test Api");
 
         return app;
     }
