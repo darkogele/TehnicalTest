@@ -1,0 +1,6 @@
+@TehnicalTestApi_HostAddress = http://localhost:5270
+
+GET {{TehnicalTestApi_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
