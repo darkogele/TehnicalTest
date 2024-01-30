@@ -11,8 +11,8 @@ using TechnicalTestApi.Data;
 namespace TechnicalTestApi.Migrations
 {
     [DbContext(typeof(ApplicationDataContext))]
-    [Migration("20240130112402_user_sql_max")]
-    partial class user_sql_max
+    [Migration("20240130113034_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
