@@ -1,20 +1,26 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using Swashbuckle.AspNetCore.Annotations;
-using TechnicalTestApi.Dtos;
+﻿using TechnicalTestApi.Dtos;
+using TechnicalTestApi.Services.Contracts;
 
-// TechnicalTestApi
 namespace TechnicalTestApi.Controllers;
 
-[Route("api/token")]
 [ApiController]
-public class UsersController : ControllerBase
+[Route("api")]
+public class UsersController(IUserService userService) : ControllerBase
 {
     [AllowAnonymous]
-    [HttpPost("login")]
+    [HttpPost("token")]
     [SwaggerOperation(Summary = "Login for jwt token")]
     public async Task<ActionResult> Login(LoginDto loginDto, CancellationToken ct)
     {
-        return Ok();
+        return HandleResult(await userService.Login(loginDto, ct));
+    }
+
+    private ActionResult HandleResult<T>(Result<T> result)
+    {
+        if (!result.IsSuccess) return BadRequest(result.Error);
+
+        if (result.Data == null) return NoContent();
+
+        return Ok(result.Data);
     }
 }

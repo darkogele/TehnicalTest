@@ -12,6 +12,8 @@ public class User : IdentityUser<int>
     public string? Bio { get; set; }
     public double Rating { get; set; }
     public DateTime DateOfBirth { get; set; }
+    public string? RefreshToken { get; set; }
+    public DateTime? RefreshTokenExpiryTime { get; set; }
 
     //Fk
     public List<UserRole>? UserRoles { get; init; }

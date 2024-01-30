@@ -1,5 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using TechnicalTestApi.Data;
+using TechnicalTestApi.Services;
+using TechnicalTestApi.Services.Contracts;
 
 namespace TechnicalTestApi.Registers;
 
@@ -26,6 +28,7 @@ public static partial class Register
             options.UseSqlite(config.GetConnectionString("DefaultConnection")));
 
         // Dependency injection of custom Services
+        services.AddScoped<IUserService, UserService>();
 
         return services;
     }
