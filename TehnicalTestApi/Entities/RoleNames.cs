@@ -10,5 +10,4 @@ public static class RoleNames
 public static class PolicyRoleName
 {
     public const string PolicyAdmin = "RequireAdminRole";
-
 }

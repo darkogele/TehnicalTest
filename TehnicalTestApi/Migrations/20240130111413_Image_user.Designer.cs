@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TechnicalTestApi.Data;
 
@@ -10,9 +11,11 @@ using TechnicalTestApi.Data;
 namespace TechnicalTestApi.Migrations
 {
     [DbContext(typeof(ApplicationDataContext))]
-    partial class ApplicationDataContextModelSnapshot : ModelSnapshot
+    [Migration("20240130111413_Image_user")]
+    partial class Image_user
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.1");
@@ -138,11 +141,9 @@ namespace TechnicalTestApi.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Address")
-                        .HasMaxLength(255)
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Bio")
-                        .HasMaxLength(255)
                         .HasColumnType("TEXT");
 
                     b.Property<string>("ConcurrencyStamp")
@@ -150,7 +151,6 @@ namespace TechnicalTestApi.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Country")
-                        .HasMaxLength(255)
                         .HasColumnType("TEXT");
 
                     b.Property<DateTime>("DateOfBirth")
@@ -165,15 +165,12 @@ namespace TechnicalTestApi.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("FirstName")
-                        .HasMaxLength(255)
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Image")
-                        .HasMaxLength(1000)
                         .HasColumnType("TEXT");
 
                     b.Property<string>("LastName")
-                        .HasMaxLength(255)
                         .HasColumnType("TEXT");
 
                     b.Property<bool>("LockoutEnabled")
@@ -203,7 +200,6 @@ namespace TechnicalTestApi.Migrations
                         .HasColumnType("REAL");
 
                     b.Property<string>("RefreshToken")
-                        .HasMaxLength(255)
                         .HasColumnType("TEXT");
 
                     b.Property<DateTime?>("RefreshTokenExpiryTime")
@@ -213,7 +209,6 @@ namespace TechnicalTestApi.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Title")
-                        .HasMaxLength(50)
                         .HasColumnType("TEXT");
 
                     b.Property<bool>("TwoFactorEnabled")
