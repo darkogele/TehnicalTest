@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using TechnicalTestApi.Data;
 using TechnicalTestApi.Dtos;
 using TechnicalTestApi.Entities;
 using TechnicalTestApi.Services.Contracts;
@@ -10,13 +11,14 @@ public class UserService(
     UserManager<User> userManager,
     SignInManager<User> signInManager,
     TokenService tokenService,
+    ApplicationDataContext dataContext,
     IConfiguration configuration) : IUserService
 {
     public async Task<Result<UserDto>> Login(LoginDto loginDto, CancellationToken ct)
     {
         // Find user by UserName
         var user = await userManager.FindByNameAsync(loginDto.UserName);
-            //.Users.FirstOrDefaultAsync(u => u.UserName == loginDto.UserName, ct);
+
         if (user == null) return Result<UserDto>.Failure("Unauthorized");
 
         // Check if user Password is correct
@@ -34,9 +36,33 @@ public class UserService(
 
         // Update user in db
         await userManager.UpdateAsync(user);
+        var tokenData = await tokenService.CreateToken(user);
 
-        var userDto = UserDto.FromUser(user, await tokenService.CreateToken(user), user.RefreshToken);
+        var userDto = UserDto.FromUser(user, tokenData.TokenType, tokenData.AccessToken, tokenData.ExpiresAt);
 
         return Result<UserDto>.Success(userDto);
+    }
+
+    public async Task<Result<List<EmployeeDto>>> GetEmployeeList(CancellationToken ct)
+    {
+        // Here we can add search and pagination in the future
+        var employees = await dataContext.Users
+            .Where(x => x.UserRoles!.Any(r => r.Role!.Name == RoleNames.Employee))
+            .Select(x => new EmployeeDto
+            {
+                Id = x.Id,
+                FirstName = x.FirstName,
+                LastName = x.LastName,
+                Address = x.Address,
+                Title = x.Title,
+                Email = x.Email,
+                Country = x.Country,
+                DateOfBirth = x.DateOfBirth,
+                Bio = x.Bio,
+                Rating = x.Rating,
+                Image = x.Image
+            }).ToListAsync(ct);
+
+        return Result<List<EmployeeDto>>.Success(employees);
     }
 }

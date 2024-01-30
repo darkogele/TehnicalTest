@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using System.Globalization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -7,6 +8,8 @@ using System.Text;
 using TechnicalTestApi.Entities;
 
 namespace TechnicalTestApi.Services;
+
+public record TokenData(string AccessToken, string TokenType, string ExpiresAt);
 
 public class TokenService
 {
@@ -23,7 +26,7 @@ public class TokenService
         _key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config["Jwt:TokenKey"]!));
     }
 
-    public async Task<string> CreateToken(User user)
+    public async Task<TokenData> CreateToken(User user)
     {
         var claims = new List<Claim>
         {
@@ -38,7 +41,7 @@ public class TokenService
             new Claim(ClaimTypes.Role, role)));
 
         var credentials = new SigningCredentials(_key, SecurityAlgorithms.HmacSha512);
-        var tokenInDays = int.TryParse(_config["JWT:RefreshTokenValidityInDays"], out var tokenValidityInDays);
+        var tokenInDays = int.TryParse(_config["JWT:TokenValidityInDays"], out var tokenValidityInDays);
         if (!tokenInDays) throw new Exception("Cannot read Jwt:RefreshTokenValidityInDays");
 
         var token = new JwtSecurityToken(
@@ -48,7 +51,9 @@ public class TokenService
             expires: DateTime.Now.AddDays(tokenValidityInDays),
             signingCredentials: credentials);
 
-        return new JwtSecurityTokenHandler().WriteToken(token);
+        var accessToken = new JwtSecurityTokenHandler().WriteToken(token);
+
+        return new TokenData(accessToken, "Bearer", token.ValidTo.ToString("o", CultureInfo.InvariantCulture));
     }
 
     public ClaimsPrincipal? GetPrincipalFromExpiredToken(string token)

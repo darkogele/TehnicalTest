@@ -10,6 +10,7 @@ public class User : IdentityUser<int>
     public string? Address { get; set; }
     public string? Country { get; set; }
     public string? Bio { get; set; }
+    public string? Image { get; set; }
     public double Rating { get; set; }
     public DateTime DateOfBirth { get; set; }
     public string? RefreshToken { get; set; }

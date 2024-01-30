@@ -1,22 +1,28 @@
+using System.Text.Json.Serialization;
 using TechnicalTestApi.Entities;
 
 namespace TechnicalTestApi.Dtos;
 
-public record UserDto(
-    int Id,
-    string Token,
-    string UserName,
-    string Email,
-    string? PhoneNumber,
-    string RefreshToken,
-    DateTime? RefreshTokenExpiryTime)
+public class UserDto
 {
-    public static UserDto FromUser(User user, string token, string refreshToken) =>
-        new(user.Id,
-            token,
-            user.UserName!,
-            user.Email!,
-            user.PhoneNumber,
-            refreshToken,
-            user.RefreshTokenExpiryTime);
+    public int Id { get; set; }
+
+    [JsonPropertyName("token_type")]
+    public string TokenType { get; set; } = default!;
+
+    [JsonPropertyName("expires_at")]
+    public string ExpiresAt { get; set; } = default!;
+
+    [JsonPropertyName("access_token")]
+    public string AccessToken { get; set; } = default!;
+
+
+    public static UserDto FromUser(User user, string tokenType, string token, string expiresAt) =>
+        new()
+        {
+            Id = user.Id,
+            TokenType = tokenType,
+            ExpiresAt = expiresAt,
+            AccessToken = token
+        };
 }

@@ -53,6 +53,7 @@ public static class Seed
             .RuleFor(p => p.Address, f => f.Address.FullAddress())
             .RuleFor(p => p.Country, f => f.Address.Country())
             .RuleFor(p => p.Bio, f => f.Lorem.Sentence())
+            .RuleFor(p => p.Image, f => f.Image.PicsumUrl())
             .RuleFor(p => p.Rating, f => f.Random.Double(1, 5));
 
         foreach (var user in faker.Generate(20))

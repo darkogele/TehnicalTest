@@ -3,7 +3,7 @@ using TechnicalTestApi.Services.Contracts;
 
 namespace TechnicalTestApi.Controllers;
 
-[ApiController]
+[ApiController, Authorize]
 [Route("api")]
 public class UsersController(IUserService userService) : ControllerBase
 {
@@ -23,4 +23,11 @@ public class UsersController(IUserService userService) : ControllerBase
 
         return Ok(result.Data);
     }
+
+    [HttpGet("employee/list/")]
+    public async Task<ActionResult> GetEmployeeList(CancellationToken ct)
+    {
+        return HandleResult(await userService.GetEmployeeList(ct));
+    }
+
 }
