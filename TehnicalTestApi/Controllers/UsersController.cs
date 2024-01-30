@@ -1,5 +1,4 @@
 ﻿using TechnicalTestApi.Dtos;
-using TechnicalTestApi.Entities;
 using TechnicalTestApi.Services.Contracts;
 
 namespace TechnicalTestApi.Controllers;
@@ -17,7 +16,7 @@ public class UsersController(IUserService userService) : ControllerBase
     }
 
     [Authorize(Policy = PolicyRoleName.PolicyAdmin)]
-    [HttpGet("employee/list/")]
+    [HttpGet("employee/list")]
     [SwaggerOperation(Summary = "Get all employees list from db as admin")]
     public async Task<ActionResult<List<EmployeeDto>>> GetEmployeeList(CancellationToken ct)
     {
