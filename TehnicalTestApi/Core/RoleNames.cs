@@ -1,4 +1,4 @@
-﻿namespace TechnicalTestApi.Entities;
+﻿namespace TechnicalTestApi.Core;
 
 public static class RoleNames
 {
